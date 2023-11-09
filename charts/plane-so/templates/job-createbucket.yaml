@@ -1,0 +1,153 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "plane-so.fullname" . }}-createbucket
+spec:
+  template:
+    spec:
+      containers:
+        - name: createbucket
+          env:
+            - name: DEBUG
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: DEBUG
+            - name: DJANGO_SETTINGS_MODULE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: DJANGO_SETTINGS_MODULE
+            - name: NEXT_PUBLIC_ENABLE_OAUTH
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: NEXT_PUBLIC_ENABLE_OAUTH
+            - name: NEXT_PUBLIC_DEPLOY_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: NEXT_PUBLIC_DEPLOY_URL
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: SENTRY_DSN
+            - name: GITHUB_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: GITHUB_CLIENT_SECRET
+            - name: DOCKERIZED
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: DOCKERIZED
+            - name: PGHOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: PGHOST
+            - name: PGDATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: PGDATABASE
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: POSTGRES_DB
+            - name: PGDATA
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: PGDATA
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: DATABASE_URL
+            - name: REDIS_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: REDIS_PORT
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: REDIS_URL
+            - name: EMAIL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: EMAIL_HOST
+            - name: EMAIL_HOST_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: EMAIL_HOST_USER
+            - name: EMAIL_HOST_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: EMAIL_HOST_PASSWORD
+            - name: EMAIL_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: EMAIL_PORT
+            - name: EMAIL_FROM
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: EMAIL_FROM
+            - name: EMAIL_USE_TLS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: EMAIL_USE_TLS
+            - name: EMAIL_USE_SSL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: EMAIL_USE_SSL
+            - name: DEFAULT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: DEFAULT_EMAIL
+            - name: DEFAULT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: DEFAULT_PASSWORD
+            - name: OPENAI_API_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: OPENAI_API_BASE
+          image: minio/mc
+          imagePullPolicy: Always
+          command:
+            - /bin/sh
+          args: ["-c", "/usr/bin/mc config host add plane-minio http://{{ include "plane-so.fullname" . }}-minio:9000 $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY; /usr/bin/mc mb {{ include "plane-so.fullname" . }}-minio/$AWS_S3_BUCKET_NAME; /usr/bin/mc anonymous set download {{ include "plane-so.fullname" . }}-minio/$AWS_S3_BUCKET_NAME; exit 0;"]
+      restartPolicy: OnFailure
+  backoffLimit: 40
+  ttlSecondsAfterFinished: 600

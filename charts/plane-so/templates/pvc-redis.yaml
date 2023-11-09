@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  metadata:
+  name: {{ include "plane-so.fullname" . }}-redis
+  labels:
+    {{- include "plane-so.labels" . | nindent 4 }}
+spec:
+    accessModes: {{.Values.storage.redis.accessModes}}
+    resources:
+        requests:
+          storage: {{ .Values.storage.redis.size }}
+    storageClassName: {{ .Values.storage.redis.storageClass }}

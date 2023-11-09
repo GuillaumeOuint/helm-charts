@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "plane-so.fullname" . }}-minio
+  labels:
+    {{- include "plane-so.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "plane-so.selectorLabels" . | nindent 6 }}
+      plane.so/component: minio
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "plane-so.selectorLabels" . | nindent 8 }}
+        plane.so/component: minio
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "plane-so.fullname" . }}-minio
+      containers:
+        - name: {{ .Chart.Name }}
+          env:
+            - name: MINIO_ROOT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: MINIO_ROOT_USER
+            - name: MINIO_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: MINIO_ROOT_PASSWORD
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.minio.repository }}:{{ .Values.image.minio.tag | default "latest" }}"
+          imagePullPolicy: {{ .Values.image.minio.pullPolicy }}
+          command:
+            - server
+          args:
+            - /export
+            - --console-address
+            - ":{{ .Values.service.minio.port }}"
+          volumeMounts:
+            - name: data
+              mountPath: /export
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.minio.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /minio/health/live
+              port: http
+              scheme: HTTP
+          readinessProbe:
+            httpGet:
+              path: /minio/health/ready
+              port: http
+              scheme: HTTP
+          resources:
+            {{- toYaml .Values.resources.minio | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

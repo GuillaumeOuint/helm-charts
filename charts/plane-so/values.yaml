@@ -1,0 +1,261 @@
+# Default values for plane-so.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount:
+  web: 1 # overwritten by autoscaling
+  space: 1 # overwritten by autoscaling
+  api: 1 # overwritten by autoscaling
+  beatWorker: 1
+  worker: 1
+
+image:
+  web:
+    repository: makeplane/plane-frontend
+    pullPolicy: IfNotPresent
+    tag: ""
+  space:
+    repository: makeplane/plane-space
+    pullPolicy: IfNotPresent
+    tag: ""
+  api:
+    repository: makeplane/plane-backend
+    pullPolicy: IfNotPresent
+    tag: ""
+  redis:
+    repository: redis
+    pullPolicy: IfNotPresent
+    tag: "6.2.7-alpine"
+  postgres:
+    repository: postgres
+    pullPolicy: IfNotPresent
+    tag: "15.2-alpine"
+  createbuckets:
+    repository: minio/mc
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is "latest".
+    tag: ""
+  minio:
+    repository: minio/minio
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is "latest".
+    tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  web:
+    type: ClusterIP
+    port: 3000
+  space:
+    type: ClusterIP
+    port: 3000
+  api:
+    type: ClusterIP
+    port: 8000
+  redis:
+    type: ClusterIP
+    port: 6379
+  postgres:
+    type: ClusterIP
+    port: 5432
+  minio:
+    type: ClusterIP
+    port: 9000
+  worker:
+    type: ClusterIP
+    port: 8000
+  beatWorker:
+    type: ClusterIP
+    port: 8000
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: web
+              port:
+                number: 3000
+        - path: /api/
+          pathType: Prefix
+          backend:
+            service:
+              name: api
+              port:
+                number: 8000
+        - path: /spaces/
+          pathType: Prefix
+          backend:
+            service:
+              name: space
+              port:
+                number: 3000
+        - path: /uploads/
+          pathType: Prefix
+          backend:
+            service:
+              name: minio
+              port:
+                number: 9000
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # web:
+    # limits:
+      # cpu: 100m
+      # memory: 128Mi
+    # requests:
+      # cpu: 100m
+      # memory: 128Mi
+  # space:
+    # limits:
+      # cpu: 100m
+      # memory: 128Mi
+    # requests:
+      # cpu: 100m
+      # memory: 128Mi
+  # api:
+    # limits:
+      # cpu: 100m
+      # memory: 128Mi
+    # requests:
+      # cpu: 100m
+      # memory: 128Mi
+  # redis:
+    # limits:
+      # cpu: 100m
+      # memory: 128Mi
+    # requests:
+      # cpu: 100m
+      # memory: 128Mi
+  # postgres:
+    # limits:
+      # cpu: 100m
+      # memory: 128Mi
+    # requests:
+      # cpu: 100m
+      # memory: 128Mi
+  # minio:
+    # limits:
+      # cpu: 100m
+      # memory: 128Mi
+    # requests:
+      # cpu: 100m
+      # memory: 128Mi
+  # worker:
+    # limits:
+      # cpu: 100m
+      # memory: 128Mi
+    # requests:
+      # cpu: 100m
+      # memory: 128Mi
+  # beatWorker:
+    # limits:
+      # cpu: 100m
+      # memory: 128Mi
+    # requests:
+      # cpu: 100m
+      # memory: 128Mi
+
+autoscaling:
+  web:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+  space:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+  api:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+
+
+storage:
+  redis:
+    size: 1Gi
+    storageClass: ""
+    accessModes:
+      - ReadWriteOnce
+  postgres:
+    size: 5Gi
+    storageClass: ""
+    accessModes:
+      - ReadWriteOnce
+  minio:
+    size: 5Gi
+    storageClass: ""
+    accessModes:
+      - ReadWriteOnce
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+env:
+  DEBUG: "0"
+  DJANGO_SETTINGS_MODULE: "plane.settings.selfhosted"
+  NEXT_PUBLIC_ENABLE_OAUTH: "0"
+  NEXT_PUBLIC_DEPLOY_URL: "http://chart-example.local/spaces"
+  SENTRY_DSN: ""
+  GITHUB_CLIENT_SECRET: ""
+  PGDATABASE: "plane"
+  POSTGRES_USER: "plane"
+  POSTGRES_PASSWORD: "plane"
+  POSTGRES_DB: "plane"
+  REDIS_PORT: "6379"
+  EMAIL_HOST: ""
+  EMAIL_HOST_USER: ""
+  EMAIL_HOST_PASSWORD: ""
+  EMAIL_PORT: "587"
+  EMAIL_FROM: "Team Plane <team@mailer.plane.so>"
+  EMAIL_USE_TLS: "1"
+  EMAIL_USE_SSL: "0"
+  DEFAULT_EMAIL: "captain@plane.so"
+  DEFAULT_PASSWORD: "password123"
+  OPENAI_API_BASE: "https://api.openai.com/v1"
+  OPENAI_API_KEY: "sk-"
+  GPT_ENGINE: "gpt-3.5-turbo"
+  ENABLE_SIGNUP: "1"
+  ENABLE_EMAIL_PASSWORD: "1"
+  ENABLE_MAGIC_LINK_LOGIN: "0"
+  SECRET_KEY: "ChangeMeToARandomString"
+  MINIO_ROOT_USER: "access-key"
+  MINIO_ROOT_PASSWORD: "secret-key"
+  FILE_SIZE_LIMIT: "5242880"
+  GUNICORN_WORKERS: "2"

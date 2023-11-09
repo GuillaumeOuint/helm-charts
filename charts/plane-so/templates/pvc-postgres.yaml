@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  metadata:
+  name: {{ include "plane-so.fullname" . }}-postgres
+  labels:
+    {{- include "plane-so.labels" . | nindent 4 }}
+spec:
+    accessModes: {{.Values.storage.postgres.accessModes}}
+    resources:
+        requests:
+          storage: {{ .Values.storage.postgres.size }}
+    storageClassName: {{ .Values.storage.postgres.storageClass }}

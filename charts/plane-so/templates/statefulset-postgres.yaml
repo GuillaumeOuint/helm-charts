@@ -48,6 +48,11 @@ spec:
                 secretKeyRef:
                   name: {{ include "plane-so.fullname" . }}-env
                   key: POSTGRES_DB
+            - name: PGDATA
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: PGDATA
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.postgres.repository }}:{{ .Values.image.postgres.tag | default "latest" }}"

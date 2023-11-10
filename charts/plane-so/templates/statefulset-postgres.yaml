@@ -33,9 +33,9 @@ spec:
       initContainers:
       - name: init
         image: alpine
-        command: ["sh", "-c", "chown -R 999:999 /data && rm -Rf /data/lost+found && exit 0"]
+        command: ["sh", "-c", "chown -R 999:999 /var/lib/postgresql/data && rm -Rf /var/lib/postgresql/data/lost+found"]
         volumeMounts:
-          - mountPath: /data
+          - mountPath: /var/lib/postgresql/data
             name: postgres-data
       containers:
         - name: {{ .Chart.Name }}
@@ -69,9 +69,7 @@ spec:
           imagePullPolicy: {{ .Values.image.postgres.pullPolicy }}
           volumeMounts:
             - name: postgres-data
-              mountPath: /data
-          command:
-            - postgres
+              mountPath: /var/lib/postgresql/data
           args:
             - -c
             - 'max_connections=1000'

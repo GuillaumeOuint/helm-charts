@@ -33,7 +33,7 @@ spec:
       initContainers:
       - name: init
         image: alpine
-        command: ["sh", "-c", "chown 1000:1000 /var/lib/postgresql/data"]
+        command: ["sh", "-c", "chown 1000:1000 /var/lib/postgresql/data && rm -Rf /var/lib/postgresql/data/lost+found"]
         volumeMounts:
           - mountPath: /var/lib/postgresql/data
             name: postgres-data

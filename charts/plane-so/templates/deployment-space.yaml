@@ -265,11 +265,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /spaces/
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /spaces/
               port: http
           resources:
             {{- toYaml .Values.resources.space | nindent 12 }}

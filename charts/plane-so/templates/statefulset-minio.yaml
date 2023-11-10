@@ -51,13 +51,16 @@ spec:
             - server
             - /export
             - --console-address
-            - ":{{ .Values.service.minio.port }}"
+            - ":{{ .Values.service.minioConsole.port }}"
           volumeMounts:
             - name: data
               mountPath: /export
           ports:
             - name: http
               containerPort: {{ .Values.service.minio.port }}
+              protocol: TCP
+            - name: console
+              containerPort: {{ .Values.service.minioConsole.port }}
               protocol: TCP
           livenessProbe:
             httpGet:

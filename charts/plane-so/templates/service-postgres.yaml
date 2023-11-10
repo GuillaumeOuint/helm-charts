@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "plane-so.fullname" . }}-postgres
+  labels:
+    {{- include "plane-so.labels" . | nindent 4 }}
+    plane.so/component: postgres
+spec:
+  type: {{ .Values.service.postgres.type }}
+  ports:
+    - port: {{ .Values.service.postgres.port }}
+      targetPort: postgres
+      protocol: TCP
+      name: postgres
+  selector:
+    {{- include "plane-so.selectorLabels" . | nindent 4 }}
+    plane.so/component: postgres

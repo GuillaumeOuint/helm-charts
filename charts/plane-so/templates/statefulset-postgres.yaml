@@ -61,10 +61,10 @@ spec:
             - name: postgres-data
               mountPath: /var/lib/postgresql/data
           command:
-            - postgres
+            - bash
           args:
             - -c
-            - 'max_connections=1000'
+            - 'mkdir $PGDATA && postgres -c max_connections=1000'
           ports:
             - name: postgres
               containerPort: {{ .Values.service.postgres.port }}

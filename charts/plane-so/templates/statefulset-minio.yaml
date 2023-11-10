@@ -43,8 +43,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "plane-so.fullname" . }}-env
                   key: MINIO_ROOT_PASSWORD
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.minio.repository }}:{{ .Values.image.minio.tag | default "latest" }}"
           imagePullPolicy: {{ .Values.image.minio.pullPolicy }}
           args:

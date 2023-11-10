@@ -147,7 +147,7 @@ spec:
           imagePullPolicy: Always
           command:
             - /bin/sh
-          args: ["-c", "/usr/bin/mc config host add plane-minio http://{{ include "plane-so.fullname" . }}-minioconsole:{{ .Values.service.minio.port }} $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY && /usr/bin/mc mb plane-minio/$AWS_S3_BUCKET_NAME && /usr/bin/mc anonymous set download plane-minio/$AWS_S3_BUCKET_NAME;"]
+          args: ["-c", "/usr/bin/mc config host add plane-minio http://{{ include "plane-so.fullname" . }}-minio:{{ .Values.service.minio.port }} $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY && /usr/bin/mc mb plane-minio/$AWS_S3_BUCKET_NAME && /usr/bin/mc anonymous set download plane-minio/$AWS_S3_BUCKET_NAME;"]
       restartPolicy: OnFailure
   backoffLimit: 40
   ttlSecondsAfterFinished: 600

@@ -275,8 +275,6 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.proxy.repository }}:{{ .Values.image.proxy.tag | default "latest" }}"
           imagePullPolicy: {{ .Values.image.proxy.pullPolicy }}
-          command:
-            - ./bin/takeoff
           ports:
             - name: http
               containerPort: {{ .Values.service.proxy.port }}

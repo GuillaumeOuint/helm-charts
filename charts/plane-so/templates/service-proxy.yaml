@@ -1,0 +1,17 @@
+proxyVersion: v1
+kind: Service
+metadata:
+  name: {{ include "plane-so.fullname" . }}-proxy
+  labels:
+    {{- include "plane-so.labels" . | nindent 4 }}
+    plane.so/component: proxy
+spec:
+  type: {{ .Values.service.proxy.type }}
+  ports:
+    - port: {{ .Values.service.proxy.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "plane-so.selectorLabels" . | nindent 4 }}
+    plane.so/component: proxy

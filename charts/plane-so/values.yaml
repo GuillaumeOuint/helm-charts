@@ -5,6 +5,7 @@ replicaCount:
   web: 1 # overwritten by autoscaling
   space: 1 # overwritten by autoscaling
   api: 1 # overwritten by autoscaling
+  proxy: 1 # overwritten by autoscaling
   beatWorker: 1
   worker: 1
 
@@ -38,6 +39,10 @@ image:
     repository: minio/minio
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is "latest".
+    tag: ""
+  proxy:
+    repository: "makeplane/plane-proxy"
+    pullPolicy: IfNotPresent
     tag: ""
 
 imagePullSecrets: []
@@ -85,6 +90,9 @@ service:
   beatWorker:
     type: ClusterIP
     port: 8000
+  proxy:
+    type: ClusterIP
+    port: 80
 
 ingress:
   enabled: false
@@ -99,30 +107,9 @@ ingress:
           pathType: Prefix
           backend:
             service:
-              name: web
+              name: proxy
               port:
-                number: 3000
-        - path: /api/
-          pathType: Prefix
-          backend:
-            service:
-              name: api
-              port:
-                number: 8000
-        - path: /spaces/
-          pathType: Prefix
-          backend:
-            service:
-              name: space
-              port:
-                number: 3000
-        - path: /uploads/
-          pathType: Prefix
-          backend:
-            service:
-              name: minio
-              port:
-                number: 9000
+                number: 80
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -185,6 +172,13 @@ resources: {}
     # requests:
       # cpu: 100m
       # memory: 128Mi
+  # proxy:
+    # limits:
+      # cpu: 100m
+      # memory: 128Mi
+    # requests:
+      # cpu: 100m
+      # memory: 128Mi
 
 autoscaling:
   web:
@@ -200,6 +194,12 @@ autoscaling:
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
   api:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+  proxy:
     enabled: false
     minReplicas: 1
     maxReplicas: 100

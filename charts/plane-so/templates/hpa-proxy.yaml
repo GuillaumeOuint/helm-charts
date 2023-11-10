@@ -1,0 +1,32 @@
+{{- if .Values.autoscaling.proxy.enabled }}
+proxyVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "plane-so.fullname" . }}-proxy
+  labels:
+    {{- include "plane-so.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    proxyVersion: apps/v1
+    kind: Deployment
+    name: {{ include "plane-so.fullname" . }}-proxy
+  minReplicas: {{ .Values.autoscaling.proxy.minReplicas }}
+  maxReplicas: {{ .Values.autoscaling.proxy.maxReplicas }}
+  metrics:
+    {{- if .Values.autoscaling.proxy.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.proxy.targetCPUUtilizationPercentage }}
+    {{- end }}
+    {{- if .Values.autoscaling.proxy.targetMemoryUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.proxy.targetMemoryUtilizationPercentage }}
+    {{- end }}
+{{- end }}

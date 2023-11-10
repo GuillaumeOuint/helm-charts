@@ -28,8 +28,14 @@ spec:
       {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: tmp
+          emptyDir: {}
       containers:
         - name: {{ .Chart.Name }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
           env:
             - name: DEBUG
               valueFrom:

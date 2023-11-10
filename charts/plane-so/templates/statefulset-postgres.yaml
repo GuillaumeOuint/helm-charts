@@ -82,9 +82,7 @@ spec:
           command:
             - /bin/sh
             - '-c'
-            - >-
-              exec pg_isready -U "$POSTGRES_USER" -h 127.0.0.1
-              -p 5432
+            - exec pg_isready -U "$POSTGRES_USER" -h 127.0.0.1 -p 5432
         initialDelaySeconds: 30
         timeoutSeconds: 5
         periodSeconds: 10
@@ -96,9 +94,7 @@ spec:
             - /bin/sh
             - '-c'
             - '-e'
-            - >
-              exec pg_isready -U "$POSTGRES_USER" -h 127.0.0.1
-              -p 5432
+            - exec pg_isready -U "$POSTGRES_USER" -h 127.0.0.1-p 5432
         initialDelaySeconds: 5
         timeoutSeconds: 5
         periodSeconds: 10

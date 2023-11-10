@@ -30,6 +30,13 @@ spec:
         - name: postgres-data
           persistentVolumeClaim:
             claimName: {{ include "plane-so.fullname" . }}-postgres
+      initContainers:
+      - name: init
+        image: alpine
+        command: ["sh", "-c", "chown 1000:1000 /var/lib/postgresql/data"]
+        volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: postgres-data
       containers:
         - name: {{ .Chart.Name }}
           env:

@@ -3,12 +3,12 @@ entries:
   plane-so:
   - apiVersion: v2
     appVersion: latest
-    created: "2023-11-10T05:47:28.62023066+01:00"
+    created: "2023-11-10T05:52:44.956244904+01:00"
     description: A Helm chart for Plane.so application
-    digest: 52c68c178593ed4876e6432386ae199d13690ceb14cbd112a6c76f8fff509ed8
+    digest: 063bc47b78742a59e6512f87fb5b240eed7e26db1aba760c2f832e245d791ba1
     name: plane-so
     type: application
     urls:
     - https://guillaumeouint.github.io/helm-charts/plane-so-1.0.0.tgz
     version: 1.0.0
-generated: "2023-11-10T05:47:28.615171932+01:00"
+generated: "2023-11-10T05:52:44.953966683+01:00"

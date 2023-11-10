@@ -143,6 +143,41 @@ spec:
                 secretKeyRef:
                   name: {{ include "plane-so.fullname" . }}-env
                   key: OPENAI_API_BASE
+            - name: USE_MINIO
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: USE_MINIO
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: AWS_REGION
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: AWS_S3_ENDPOINT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: AWS_S3_ENDPOINT_URL
+            - name: AWS_S3_BUCKET_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: AWS_S3_BUCKET_NAME
+            - name: BUCKET_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: BUCKET_NAME
           image: minio/mc
           imagePullPolicy: Always
           command:

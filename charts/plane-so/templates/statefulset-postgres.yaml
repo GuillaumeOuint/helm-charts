@@ -53,13 +53,18 @@ spec:
                 secretKeyRef:
                   name: {{ include "plane-so.fullname" . }}-env
                   key: PGDATA
+            - name: POSTGRESQL_VOLUME_DIR
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: POSTGRESQL_VOLUME_DIR
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.postgres.repository }}:{{ .Values.image.postgres.tag | default "latest" }}"
           imagePullPolicy: {{ .Values.image.postgres.pullPolicy }}
           volumeMounts:
             - name: postgres-data
-              mountPath: /var/lib/postgresql/data
+              mountPath: /var/lib/postgresql
           command:
             - postgres
           args:
@@ -75,12 +80,16 @@ spec:
               - sh
               - -c
               - pg_isready
+              - -h
+              - localhost
           readinessProbe:
             exec:
               command:
               - sh
               - -c
               - pg_isready
+              - -h
+              - localhost
           resources:
             {{- toYaml .Values.resources.postgres | nindent 12 }}
       {{- with .Values.nodeSelector }}

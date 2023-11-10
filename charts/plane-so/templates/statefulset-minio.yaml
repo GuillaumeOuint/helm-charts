@@ -47,9 +47,8 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.minio.repository }}:{{ .Values.image.minio.tag | default "latest" }}"
           imagePullPolicy: {{ .Values.image.minio.pullPolicy }}
-          command:
-            - server
           args:
+            - server
             - /export
             - --console-address
             - ":{{ .Values.service.minio.port }}"

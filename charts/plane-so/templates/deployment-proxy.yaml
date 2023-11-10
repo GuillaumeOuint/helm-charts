@@ -269,8 +269,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "plane-so.fullname" . }}-env
                   key: MINIO_HOST
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.proxy.repository }}:{{ .Values.image.proxy.tag | default "latest" }}"
           imagePullPolicy: {{ .Values.image.proxy.pullPolicy }}
           ports:

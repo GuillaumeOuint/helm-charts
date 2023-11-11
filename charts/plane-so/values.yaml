@@ -235,6 +235,7 @@ env:
   DJANGO_SETTINGS_MODULE: "plane.settings.selfhosted"
   NEXT_PUBLIC_ENABLE_OAUTH: "0"
   NEXT_PUBLIC_DEPLOY_URL: "http://chart-example.local/spaces"
+  WEB_URL: "http://chart-example.local"
   SENTRY_DSN: ""
   GITHUB_CLIENT_SECRET: ""
   PGDATABASE: "plane"

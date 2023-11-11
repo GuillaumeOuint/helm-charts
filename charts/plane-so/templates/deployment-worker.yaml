@@ -255,6 +255,11 @@ spec:
                 secretKeyRef:
                   name: {{ include "plane-so.fullname" . }}-env
                   key: BUCKET_NAME
+            - name: WEB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "plane-so.fullname" . }}-env
+                  key: WEB_URL
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.api.repository }}:{{ .Values.image.api.tag | default "latest" }}"

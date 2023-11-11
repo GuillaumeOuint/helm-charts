@@ -32,8 +32,6 @@ spec:
             claimName: {{ include "plane-so.fullname" . }}-redis
       containers:
         - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.redis.repository }}:{{ .Values.image.redis.tag | default "latest" }}"
           imagePullPolicy: {{ .Values.image.redis.pullPolicy }}
           volumeMounts:

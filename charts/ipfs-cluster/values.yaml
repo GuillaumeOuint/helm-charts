@@ -41,7 +41,7 @@ cluster:
 
   nodeSelector: {}
 
-  additionalLabels: []
+  additionalLabels: {}
 
   tolerations: []
 

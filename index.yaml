@@ -1,14 +1,27 @@
 apiVersion: v1
 entries:
+  ipfs-cluster:
+  - apiVersion: v2
+    created: "2024-01-03T11:15:56.049103005+01:00"
+    description: Run ipfs cluster along with kubo (go-ipfs)
+    digest: cb840bf743d31ebe1c52ed0341b63e7db84152a2474b2df240f9bd16d2b971fd
+    maintainers:
+    - email: rafael@skyle.net
+      name: skylenet
+    name: ipfs-cluster
+    type: application
+    urls:
+    - ipfs-cluster-0.1.13.tgz
+    version: 0.1.13
   plane-so:
   - apiVersion: v2
     appVersion: latest
-    created: "2023-11-11T02:56:42.659048209+01:00"
+    created: "2024-01-03T11:15:56.049831735+01:00"
     description: A Helm chart for Plane.so application
     digest: 8412c2107d1887cb500c741da9114a447d6173e2aeca0e63f531fedaea5c7915
     name: plane-so
     type: application
     urls:
-    - https://guillaumeouint.github.io/helm-charts/plane-so-1.0.0.tgz
+    - plane-so-1.0.0.tgz
     version: 1.0.0
-generated: "2023-11-11T02:56:42.654083611+01:00"
+generated: "2024-01-03T11:15:56.048452367+01:00"

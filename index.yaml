@@ -3,9 +3,9 @@ entries:
   gitlab-aio:
   - apiVersion: v2
     appVersion: latest
-    created: "2024-01-07T22:15:12.843089467+01:00"
+    created: "2024-01-07T22:28:54.561753538+01:00"
     description: A All-In-One gitlab installation with automatic daily updates
-    digest: 4501013dd00a2895cc474bbb4c808ae0f357348a32204d37e439fa455a7223c6
+    digest: a57bd19c8da239c9a7c10e7e03f79b7027e5d26d6c9a1cdf65143e3ef530eb99
     name: gitlab-aio
     type: application
     urls:
@@ -13,7 +13,7 @@ entries:
     version: 0.1.0
   ipfs-cluster:
   - apiVersion: v2
-    created: "2024-01-07T22:15:12.844472914+01:00"
+    created: "2024-01-07T22:28:54.56339124+01:00"
     description: Run ipfs cluster along with kubo (go-ipfs)
     digest: 3e8b494e11572a70bd8388182898063983cac5eb32336b312ebc59573b3ad928
     maintainers:
@@ -27,7 +27,7 @@ entries:
   plane-so:
   - apiVersion: v2
     appVersion: latest
-    created: "2024-01-07T22:15:12.846445554+01:00"
+    created: "2024-01-07T22:28:54.565404703+01:00"
     description: A Helm chart for Plane.so application
     digest: 8412c2107d1887cb500c741da9114a447d6173e2aeca0e63f531fedaea5c7915
     name: plane-so
@@ -35,4 +35,4 @@ entries:
     urls:
     - https://guillaumeouint.github.io/helm-charts/plane-so-1.0.0.tgz
     version: 1.0.0
-generated: "2024-01-07T22:15:12.84179486+01:00"
+generated: "2024-01-07T22:28:54.56046282+01:00"

@@ -83,14 +83,14 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - curl -f http://localhost:80/ || exit 1
+                - curl -f --insecure https://localhost:443/ || exit 1
             initialDelaySeconds: 600
           readinessProbe:
             exec:
               command:
                 - /bin/sh
                 - -c
-                - curl -f http://localhost:80/ || exit 1
+                - curl -f --insecure https://localhost:443/ || exit 1
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

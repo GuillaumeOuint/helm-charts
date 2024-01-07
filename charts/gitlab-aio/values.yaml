@@ -41,7 +41,7 @@ storage:
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "gitlab"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -86,7 +86,7 @@ ingress:
         - path: /
           pathType: ImplementationSpecific
   tls: []
-  #  - secretName: chart-example-tls
+  #  - secretName: gitlab-cert
   #    hosts:
   #      - chart-example.local
 

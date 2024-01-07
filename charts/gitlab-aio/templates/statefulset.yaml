@@ -84,7 +84,7 @@ spec:
                 - /bin/sh
                 - -c
                 - curl -f http://localhost:80/ || exit 1
-            initialDelaySeconds: 300
+            initialDelaySeconds: 600
           readinessProbe:
             exec:
               command:

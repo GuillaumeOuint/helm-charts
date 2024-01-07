@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "gitlab-aio.fullname" . }}
+  labels:
+    {{- include "gitlab-aio.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  serviceName: {{ include "gitlab-aio.fullname" . }}
+  selector:
+    matchLabels:
+      {{- include "gitlab-aio.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "gitlab-aio.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: gitlab
+          persistentVolumeClaim:
+            claimName: {{ include "gitlab-aio.fullname" . }}-data
+        - name: gitlab-config
+          persistentVolumeClaim:
+            claimName: {{ include "gitlab-aio.fullname" . }}-config
+        - name: gitlab-logs
+          persistentVolumeClaim:
+            claimName: {{ include "gitlab-aio.fullname" . }}-logs
+        - name: cert
+          secret:
+            secretName: {{ include "gitlab-aio.fullname" . }}-cert
+            defaultMode: 420
+      initContainers:
+        - name: setperms
+          image: gitlab/gitlab-ce:latest
+          command:
+            - update-permissions
+          volumeMounts:
+            - name: gitlab
+              mountPath: /var/opt/gitlab
+            - name: gitlab-config
+              mountPath: /etc/gitlab
+            - name: gitlab-logs
+              mountPath: /var/log/gitlab
+            - name: cert
+              mountPath: /cert
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: GITLAB_OMNIBUS_CONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "gitlab-aio.fullname" . }}-config
+                  key: config
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: https
+              containerPort: 443
+              protocol: TCP
+            - name: ssh
+              containerPort: 22
+              protocol: TCP
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - curl -f http://localhost:80/ || exit 1
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - curl -f http://localhost:80/ || exit 1
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: gitlab
+              mountPath: /var/opt/gitlab
+            - name: gitlab-config
+              mountPath: /etc/gitlab
+            - name: gitlab-logs
+              mountPath: /var/log/gitlab
+            - name: cert
+              mountPath: /cert
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

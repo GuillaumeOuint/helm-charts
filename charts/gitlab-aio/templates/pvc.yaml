@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "gitlab-aio.fullname" . }}-data
+  labels:
+    {{- include "gitlab-aio.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.storage.data.size }}
+  storageClassName: {{ .Values.storage.data.storageClass }}
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "gitlab-aio.fullname" . }}-config
+  labels:
+    {{- include "gitlab-aio.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.storage.config.size }}
+  storageClassName: {{ .Values.storage.config.storageClass }}
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "gitlab-aio.fullname" . }}-logs
+  labels:
+    {{- include "gitlab-aio.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.storage.logs.size }}
+  storageClassName: {{ .Values.storage.logs.storageClass }}
+  volumeMode: Filesystem

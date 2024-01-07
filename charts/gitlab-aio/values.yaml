@@ -1,0 +1,106 @@
+# Default values for gitlab-aio.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+edition: ce # ce or ee
+config: |
+  external_url "https://gitlab.domain.tld"
+  letsencrypt['enable'] = false
+  gitlab_rails['time_zone'] = 'Europe/Paris'
+  gitlab_rails['gitlab_email_from'] = 'gitlab@domain.tld'
+  gitlab_rails['gitlab_email_reply_to'] = 'admin@domain.tld'
+  gitlab_rails['gitlab_shell_ssh_port'] = 22 
+  gitlab_rails['gitlab_ssh_host'] = 'gitlab-ssh.domain.tld'
+  gitlab_rails['smtp_enable'] = false 
+  gitlab_rails['smtp_address'] = "" 
+  gitlab_rails['smtp_port'] = 587 
+  gitlab_rails['smtp_user_name'] = ""
+  gitlab_rails['smtp_password'] = "" 
+  gitlab_rails['smtp_domain'] = "" 
+  gitlab_rails['smtp_authentication'] = ""
+  gitlab_rails['smtp_enable_starttls_auto'] = false
+  gitlab_rails['smtp_tls'] = true
+  gitlab_rails['smtp_openssl_verify_mode'] = 'none'
+  nginx['ssl_certificate'] = '/cert/tls.crt'
+  nginx['ssl_certificate_key'] = '/cert/tls.key'
+image:
+  repository: gitlab/gitlab-ce
+  pullPolicy: Always # For the auto update part to work, this needs to be set to Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+storage:
+  data:
+    storageClass: ""
+    size: 10Gi
+  logs:
+    storageClass: ""
+    size: 10Gi
+  config:
+    storageClass: ""
+    size: 1Gi
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+services:
+  web:
+    type: ClusterIP
+    port: 80
+    httpsPort: 443
+  ssh:
+    type: LoadBalancer
+    port: 22
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 6Gi
+  requests:
+    cpu: 500m
+    memory: 6Gi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

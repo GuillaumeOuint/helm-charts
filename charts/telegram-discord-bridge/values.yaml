@@ -1,0 +1,57 @@
+# Default values for telegram-discord-bridge.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+options:
+  telegram_token: ""
+  discord_token: ""
+  message_ttl: "72h"
+  channels: "" # telegram:discord,telegram:discord
+  db_size: 5Gi
+
+replicaCount: 1 # Leave to one, no need to scale
+
+image:
+  repository: guillaumeouint2/telegram-discord-bridge
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+resources:
+  # If you want to support many messages in database consider increasing the memory limit
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

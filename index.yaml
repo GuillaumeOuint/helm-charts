@@ -3,7 +3,7 @@ entries:
   gitlab-aio:
   - apiVersion: v2
     appVersion: latest
-    created: "2024-01-07T23:18:58.996813908+01:00"
+    created: "2024-04-04T20:23:44.03750502+02:00"
     description: A All-In-One gitlab installation with automatic daily updates
     digest: d17311472378d5e519555f9174fe65d0199c0146a00543e4ca015927df1c000a
     name: gitlab-aio
@@ -13,7 +13,7 @@ entries:
     version: 0.1.0
   ipfs-cluster:
   - apiVersion: v2
-    created: "2024-01-07T23:18:58.998256298+01:00"
+    created: "2024-04-04T20:23:44.04081941+02:00"
     description: Run ipfs cluster along with kubo (go-ipfs)
     digest: 3e8b494e11572a70bd8388182898063983cac5eb32336b312ebc59573b3ad928
     maintainers:
@@ -27,7 +27,7 @@ entries:
   plane-so:
   - apiVersion: v2
     appVersion: latest
-    created: "2024-01-07T23:18:59.00012987+01:00"
+    created: "2024-04-04T20:23:44.046517345+02:00"
     description: A Helm chart for Plane.so application
     digest: 8412c2107d1887cb500c741da9114a447d6173e2aeca0e63f531fedaea5c7915
     name: plane-so
@@ -35,4 +35,15 @@ entries:
     urls:
     - https://guillaumeouint.github.io/helm-charts/plane-so-1.0.0.tgz
     version: 1.0.0
-generated: "2024-01-07T23:18:58.995486574+01:00"
+  telegram-discord-bridge:
+  - apiVersion: v2
+    appVersion: v1.0.0
+    created: "2024-04-04T20:23:44.047355162+02:00"
+    description: A bot to bridge messages between telegram threads and discord channels
+    digest: 69fa39b94b1aa9bf7044411ab45677e41187a6d969b8530b1e63db356d0ef7e8
+    name: telegram-discord-bridge
+    type: application
+    urls:
+    - https://guillaumeouint.github.io/helm-charts/telegram-discord-bridge-1.0.0.tgz
+    version: 1.0.0
+generated: "2024-04-04T20:23:44.028910346+02:00"

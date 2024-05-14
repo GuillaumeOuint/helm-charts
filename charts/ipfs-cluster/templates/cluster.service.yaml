@@ -35,6 +35,8 @@ spec:
     name: api
   - port: 9095
     name: ipfs-proxy
+  - port: 9097
+    name: ipfs-pinning
   selector:
     {{- include "helm-ipfs-cluster.selectorLabels" $ | nindent 4 }}
     nodeType: cluster

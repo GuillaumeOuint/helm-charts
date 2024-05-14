@@ -3,7 +3,7 @@ entries:
   gitlab-aio:
   - apiVersion: v2
     appVersion: latest
-    created: "2024-05-14T11:38:31.535461966+02:00"
+    created: "2024-05-14T11:43:15.983693273+02:00"
     description: A All-In-One gitlab installation with automatic daily updates
     digest: d17311472378d5e519555f9174fe65d0199c0146a00543e4ca015927df1c000a
     name: gitlab-aio
@@ -13,9 +13,9 @@ entries:
     version: 0.1.0
   ipfs-cluster:
   - apiVersion: v2
-    created: "2024-05-14T11:38:31.548750801+02:00"
+    created: "2024-05-14T11:43:15.991754488+02:00"
     description: Run ipfs cluster along with kubo (go-ipfs)
-    digest: 5557643469872d3a47a70e26f5bfe53d452fbee0a522ab4339ceb0cd34d3a47e
+    digest: 03937a16f4700a0db8898d23d8d38e934e61a2b35d51ec3c80d30d4586b6d2a0
     maintainers:
     - email: rafael@skyle.net
       name: skylenet
@@ -25,7 +25,7 @@ entries:
     - https://guillaumeouint.github.io/helm-charts/ipfs-cluster-0.1.14.tgz
     version: 0.1.14
   - apiVersion: v2
-    created: "2024-05-14T11:38:31.5441999+02:00"
+    created: "2024-05-14T11:43:15.989858439+02:00"
     description: Run ipfs cluster along with kubo (go-ipfs)
     digest: 3e8b494e11572a70bd8388182898063983cac5eb32336b312ebc59573b3ad928
     maintainers:
@@ -39,7 +39,7 @@ entries:
   plane-so:
   - apiVersion: v2
     appVersion: latest
-    created: "2024-05-14T11:38:31.553644052+02:00"
+    created: "2024-05-14T11:43:15.994478947+02:00"
     description: A Helm chart for Plane.so application
     digest: 8412c2107d1887cb500c741da9114a447d6173e2aeca0e63f531fedaea5c7915
     name: plane-so
@@ -50,7 +50,7 @@ entries:
   telegram-discord-bridge:
   - apiVersion: v2
     appVersion: v1.1.1
-    created: "2024-05-14T11:38:31.556970112+02:00"
+    created: "2024-05-14T11:43:15.996444784+02:00"
     description: A bot to bridge messages between telegram threads and discord channels
     digest: bf8da76b1b9ec7970efe0c51e637ef3ed2aae09988dd2779989541ef3f840048
     name: telegram-discord-bridge
@@ -60,7 +60,7 @@ entries:
     version: 1.1.1
   - apiVersion: v2
     appVersion: v1.1.0
-    created: "2024-05-14T11:38:31.556572214+02:00"
+    created: "2024-05-14T11:43:15.995781562+02:00"
     description: A bot to bridge messages between telegram threads and discord channels
     digest: 8248568623a70a76690257d7d42c99fdc17b06188104088b476be081172bcaca
     name: telegram-discord-bridge
@@ -70,7 +70,7 @@ entries:
     version: 1.1.0
   - apiVersion: v2
     appVersion: v1.0.0
-    created: "2024-05-14T11:38:31.555686686+02:00"
+    created: "2024-05-14T11:43:15.995181183+02:00"
     description: A bot to bridge messages between telegram threads and discord channels
     digest: 69fa39b94b1aa9bf7044411ab45677e41187a6d969b8530b1e63db356d0ef7e8
     name: telegram-discord-bridge
@@ -78,4 +78,4 @@ entries:
     urls:
     - https://guillaumeouint.github.io/helm-charts/telegram-discord-bridge-1.0.0.tgz
     version: 1.0.0
-generated: "2024-05-14T11:38:31.532491812+02:00"
+generated: "2024-05-14T11:43:15.980721824+02:00"
